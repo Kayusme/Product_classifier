@@ -17,8 +17,10 @@ class TestProductClassifier(unittest.TestCase):
         )
 
     def test_handle_missing_values(self):
-        self.classifier.handle_missing_values(self.data)
-        self.assertFalse(self.data.isnull().any().any())
+        data_with_missing_values = self.data.copy()
+        data_with_missing_values.iloc[0, 0] = np.nan
+        handled_data = self.classifier.handle_missing_values(data_with_missing_values)
+        self.assertFalse(handled_data.isnull().any().any())
 
     def test_visualize_data(self):
         self.classifier.visualize_data(self.data)
